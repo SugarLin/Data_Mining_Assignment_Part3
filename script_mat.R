@@ -190,35 +190,35 @@ plot(nn)
 predicted.nn.values<-compute(nn,test[1:83])
 predicted.nn.values
 predicted.nn.values$net.result<-round(predicted.nn.values$net.result, digits = 0)
-testData <- cbind(test[1:43], class.ind(test$Grade))
+testData <- cbind(test[1:83], class.ind(test$Grade))
 
 #Excellent
-confusion.pred <- table(predicted.nn.values$net.result[,1],unlist(testData[44]),dnn=c("Prediction","Actual"))
+confusion.pred <- table(predicted.nn.values$net.result[,1],unlist(testData[84]),dnn=c("Prediction","Actual"))
 confusion.pred
 1 - sum(diag(confusion.pred)) / sum(confusion.pred)
 
 #VeryGood
-confusion.pred <- table(predicted.nn.values$net.result[,2],unlist(testData[48]),dnn=c("Prediction","Actual"))
+confusion.pred <- table(predicted.nn.values$net.result[,2],unlist(testData[88]),dnn=c("Prediction","Actual"))
 confusion.pred
 1 - sum(diag(confusion.pred)) / sum(confusion.pred)
 
 #Good
-confusion.pred <- table(predicted.nn.values$net.result[,3],unlist(testData[45]),dnn=c("Prediction","Actual"))
+confusion.pred <- table(predicted.nn.values$net.result[,3],unlist(testData[85]),dnn=c("Prediction","Actual"))
 confusion.pred
 1 - sum(diag(confusion.pred)) / sum(confusion.pred)
 
 #Sufficient
-confusion.pred <- table(predicted.nn.values$net.result[,4],unlist(testData[47]),dnn=c("Prediction","Actual"))
+confusion.pred <- table(predicted.nn.values$net.result[,4],unlist(testData[87]),dnn=c("Prediction","Actual"))
 confusion.pred
 1 - sum(diag(confusion.pred)) / sum(confusion.pred)
 
 #Weak
-confusion.pred <- table(predicted.nn.values$net.result[,5],unlist(testData[49]),dnn=c("Prediction","Actual"))
+confusion.pred <- table(predicted.nn.values$net.result[,5],unlist(testData[89]),dnn=c("Prediction","Actual"))
 confusion.pred
 1 - sum(diag(confusion.pred)) / sum(confusion.pred)
 
 #Poor
-confusion.pred <- table(predicted.nn.values$net.result[,6],unlist(testData[46]),dnn=c("Prediction","Actual"))
+confusion.pred <- table(predicted.nn.values$net.result[,6],unlist(testData[86]),dnn=c("Prediction","Actual"))
 confusion.pred
 1 - sum(diag(confusion.pred)) / sum(confusion.pred)
 
