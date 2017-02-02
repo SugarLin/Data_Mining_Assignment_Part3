@@ -82,7 +82,7 @@ tree.pred <- predict(prune.student, student.test, type="class")
 confusion.pred <- table(tree.pred, Grade.test,dnn=c("Prediction","Actual"))
 confusion.pred
 
-1 - sum(diag(confusion.pred)) / sum(confusion.pred)
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100
 
 
 ###Using ANN
@@ -195,32 +195,32 @@ testData <- cbind(test[1:83], class.ind(test$Grade))
 #Excellent
 confusion.pred <- table(predicted.nn.values$net.result[,1],unlist(testData[84]),dnn=c("Prediction","Actual"))
 confusion.pred
-1 - sum(diag(confusion.pred)) / sum(confusion.pred)
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100
 
 #VeryGood
 confusion.pred <- table(predicted.nn.values$net.result[,2],unlist(testData[88]),dnn=c("Prediction","Actual"))
 confusion.pred
-1 - sum(diag(confusion.pred)) / sum(confusion.pred)
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100
 
 #Good
 confusion.pred <- table(predicted.nn.values$net.result[,3],unlist(testData[85]),dnn=c("Prediction","Actual"))
 confusion.pred
-1 - sum(diag(confusion.pred)) / sum(confusion.pred)
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100
 
 #Sufficient
 confusion.pred <- table(predicted.nn.values$net.result[,4],unlist(testData[87]),dnn=c("Prediction","Actual"))
 confusion.pred
-1 - sum(diag(confusion.pred)) / sum(confusion.pred)
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100
 
 #Weak
 confusion.pred <- table(predicted.nn.values$net.result[,5],unlist(testData[89]),dnn=c("Prediction","Actual"))
 confusion.pred
-1 - sum(diag(confusion.pred)) / sum(confusion.pred)
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100
 
 #Poor
 confusion.pred <- table(predicted.nn.values$net.result[,6],unlist(testData[86]),dnn=c("Prediction","Actual"))
 confusion.pred
-1 - sum(diag(confusion.pred)) / sum(confusion.pred)
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100
 
 
 ###using Naive Bayes
@@ -246,23 +246,28 @@ student$health <- factor(student$health)
 set.seed(1234)
 dataset<-student[,1:26]
 dataset <- data.frame(dataset, Grade)
+dataset <- data.frame(student$Medu, student$higher)
+dataset <- data.frame(dataset, student$Fjob)
+dataset <- data.frame(dataset, Grade)
 split <- sample(1:nrow(dataset), nrow(dataset)*0.7)
 train <- dataset[split,]
 test <- dataset[-split,]
 
-classifier <- naiveBayes(Grade ~., train)
+classifier <- naiveBayes(Grade ~.-Grade, train)
 classifier
 
 prediction <- predict(classifier, test)
 prediction
 
-confusion.pred <- table(prediction, test$Grade,dnn=c("Prediction","Actual"))
+confusion.pred <- table(prediction, test$Grade ,dnn=c("Prediction","Actual"))
 confusion.pred
 
-1-sum(diag(confusion.pred)) / sum(confusion.pred)
-
-
-
+sum(diag(confusion.pred)) / sum(confusion.pred)* 100
+library(caret)
+library(klaR)
+library(MASS)
+model = train(dataset[,-4],dataset$Grade,'nb',trControl=trainControl(method='cv',number=10))
+model
 
 
 
