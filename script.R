@@ -4,11 +4,18 @@ setwd("C:/Users/User/Desktop/Foundation IT/Data Mining/Assignment Part 3/student
 ###Using Decision Tree
 library(ISLR)
 library(tree)
+##################################################################################
 #Student Performance in Mathematics
 student<-read.csv("student-mat.csv",header=TRUE, sep=";")
 
 #Student Performance in Portuguese
 student<-read.csv("student-por.csv",header=TRUE, sep=";")
+
+head(student)
+dim(student)
+str(student)
+is.na(student)
+summary(student)
 
 #Remove Unecessary Columns
 student$school<-NULL
@@ -25,6 +32,7 @@ Grade <- with(student, ifelse(G3 >=3.5 & G3<=9.4, "Weak", Grade))
 Grade <- with(student, ifelse(G3 >=0 & G3<=3.4, "Poor", Grade))
 Grade
 student <- data.frame(student, Grade)
+##################################################################################
 
 #Predict Grade with all attributes except G3 - misclassification rate=0.1848739 in Math, 0.2512821 in Por ***so use this one
 tree.student <- tree::tree(Grade ~ . -G3, student)
@@ -91,34 +99,6 @@ confusion.pred
 
 ###Using ANN
 library(ISLR)
-
-#Student Performance in Mathematics
-student<-read.csv("student-mat.csv",header=TRUE, sep=";")
-
-#Student Performance in Portuguese
-student<-read.csv("student-por.csv",header=TRUE, sep=";")
-
-#Remove Unecessary Columns
-student$school<-NULL
-student$age<-NULL
-student$sex<-NULL
-student$famsize<-NULL
-
-head(student)
-dim(student)
-str(student)
-is.na(student)
-summary(student)
-
-#Categorize G3(final grade) into Grade
-Grade <- with(student, ifelse(G3 >=17.5 & G3<=20, "Excellent", G3))
-Grade <- with(student, ifelse(G3 >=15.5 & G3<=17.4, "VeryGood", Grade))
-Grade <- with(student, ifelse(G3 >=13.5 & G3<=15.4, "Good", Grade))
-Grade <- with(student, ifelse(G3 >=9.5 & G3<=13.4, "Sufficient", Grade))
-Grade <- with(student, ifelse(G3 >=3.5 & G3<=9.4, "Weak", Grade))
-Grade <- with(student, ifelse(G3 >=0 & G3<=3.4, "Poor", Grade))
-Grade
-student <- data.frame(student, Grade)
 
 #Convert yes/no column from to 1/0 column
 student$schoolsup = as.numeric(student$schoolsup)-1
@@ -224,8 +204,28 @@ confusion.pred
 1 - sum(diag(confusion.pred)) / sum(confusion.pred)
 
 
-##using Naive Bayes
+###using Naive Bayes
+#Library for naive Bayes
+library(e1071)
 
+#Training the prediction model using Naive bayes
+student$traveltime <- factor(student$traveltime, levels=c("1","2","3","4"))
+student$freetime <- factor(student$freetime , levels=c("1","2","3","4","5"))
+student$Fedu <- factor(student$Fedu, levels=c("0","1","2","3","4"))
+classifier <- naiveBayes(Grade ~ Pstatus , student)
+classifier
+
+#higher,Fjob,Medu,treval time
+
+#Provide test data
+test <- data.frame(viagra=c("yes"))
+test$viagra <- factor(test$viagra, levels=c("no","yes"))
+test
+
+#Push the test data into classfifier and see the result
+prediction <- predict(classifier, test) #if you want to see the problem
+prediction <- predict(classifier, test ,type="raw") #im interested in result only
+prediction
 
 
 
