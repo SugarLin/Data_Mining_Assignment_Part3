@@ -1,6 +1,6 @@
 # Data_Mining_Assignment_Part3
 
-You can refer to our report "TDS3301AssignmentPart3.pdf" for details.
+You can refer to our report "DataMiningAssignmentPart3.pdf" for details.
 The dataset chosen is Student Performance dataset from https://archive.ics.uci.edu/ml/datasets/Student+Performance.
 script_mat and script_por are for student_mat and student_por respectively. 
 Please download script_mat and script_por for the R code,and change the working directory before you run the R code.
