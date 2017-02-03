@@ -5,8 +5,8 @@ setwd("C:/Users/User/Desktop/Foundation IT/Data Mining/Assignment Part 3/student
 library(ISLR)
 library(tree)
 ##################################################################################
-#Student Performance in Mathematics
-student<-read.csv("student-mat.csv",header=TRUE, sep=";")
+#Student Performance in Portugsuese
+student<-read.csv("student-por.csv",header=TRUE, sep=";")
 
 head(student)
 dim(student)
@@ -82,7 +82,7 @@ tree.pred <- predict(prune.student, student.test, type="class")
 confusion.pred <- table(tree.pred, Grade.test,dnn=c("Prediction","Actual"))
 confusion.pred
 
-sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #81.51260504
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #74.87179487
 
 
 ###Using ANN
@@ -195,22 +195,22 @@ testData <- cbind(test[1:83], class.ind(test$Grade))
 #Excellent
 confusion.pred <- table(predicted.nn.values$net.result[,1],unlist(testData[84]),dnn=c("Prediction","Actual"))
 confusion.pred
-sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #96.63865546
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #94.87179487
 
 #VeryGood
 confusion.pred <- table(predicted.nn.values$net.result[,2],unlist(testData[88]),dnn=c("Prediction","Actual"))
 confusion.pred
-sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #91.59663866
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #85.64102564
 
 #Good
 confusion.pred <- table(predicted.nn.values$net.result[,3],unlist(testData[85]),dnn=c("Prediction","Actual"))
 confusion.pred
-sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #79.83193277
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #75.8974359
 
 #Sufficient
 confusion.pred <- table(predicted.nn.values$net.result[,4],unlist(testData[87]),dnn=c("Prediction","Actual"))
 confusion.pred
-sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #68.90756303
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #71.28205128
 
 #Weak
 confusion.pred <- table(predicted.nn.values$net.result[,5],unlist(testData[89]),dnn=c("Prediction","Actual"))
@@ -220,7 +220,7 @@ sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #79.83193277
 #Poor
 confusion.pred <- table(predicted.nn.values$net.result[,6],unlist(testData[86]),dnn=c("Prediction","Actual"))
 confusion.pred
-sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #89.07563025
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #87.17948718
 
 
 ###using Naive Bayes
@@ -259,7 +259,7 @@ prediction
 confusion.pred <- table(prediction, test$Grade ,dnn=c("Prediction","Actual"))
 confusion.pred
 
-sum(diag(confusion.pred)) / sum(confusion.pred)* 100 #you will get 40.33613445
+sum(diag(confusion.pred)) / sum(confusion.pred)* 100 #you will get 40 only
 
 
 
