@@ -215,12 +215,12 @@ sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #71.28205128
 #Weak
 confusion.pred <- table(predicted.nn.values$net.result[,5],unlist(testData[89]),dnn=c("Prediction","Actual"))
 confusion.pred
-sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #79.83193277
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #87.17948718
 
 #Poor
 confusion.pred <- table(predicted.nn.values$net.result[,6],unlist(testData[86]),dnn=c("Prediction","Actual"))
 confusion.pred
-sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #87.17948718
+sum(diag(confusion.pred)) / sum(confusion.pred) * 100 #97.94871795
 
 
 ###using Naive Bayes
@@ -243,8 +243,26 @@ student$Walc <- factor(student$Walc)
 student$health <- factor(student$health)
 #student$absences <- factor(student$absences)
 
-set.seed(1234)
+#Categorize G1 into G1Grade
+G1Grade <- with(student, ifelse(G1 >=17.5 & G1<=20, "Excellent", G1))
+G1Grade <- with(student, ifelse(G1 >=15.5 & G1<=17.4, "VeryGood", G1Grade))
+G1Grade <- with(student, ifelse(G1 >=13.5 & G1<=15.4, "Good", G1Grade))
+G1Grade <- with(student, ifelse(G1 >=9.5 & G1<=13.4, "Sufficient", G1Grade))
+G1Grade <- with(student, ifelse(G1 >=3.5 & G1<=9.4, "Weak", G1Grade))
+G1Grade <- with(student, ifelse(G1 >=0 & G1<=3.4, "Poor", G1Grade))
+
+#Categorize G2 into G2Grade
+G2Grade <- with(student, ifelse(G2 >=17.5 & G2<=20, "Excellent", G2))
+G2Grade <- with(student, ifelse(G2 >=15.5 & G2<=17.4, "VeryGood", G2Grade))
+G2Grade <- with(student, ifelse(G2 >=13.5 & G2<=15.4, "Good", G2Grade))
+G2Grade <- with(student, ifelse(G2 >=9.5 & G2<=13.4, "Sufficient", G2Grade))
+G2Grade <- with(student, ifelse(G2 >=3.5 & G2<=9.4, "Weak", G2Grade))
+G2Grade <- with(student, ifelse(G2 >=0 & G2<=3.4, "Poor", G2Grade))
+
+set.seed(3)
 dataset<-student[,1:26] #using attributes from school until absences only
+dataset <- data.frame(dataset, G1Grade)
+dataset <- data.frame(dataset, G2Grade)
 dataset <- data.frame(dataset, Grade)
 split <- sample(1:nrow(dataset), nrow(dataset)*0.7)
 train <- dataset[split,]
@@ -259,7 +277,7 @@ prediction
 confusion.pred <- table(prediction, test$Grade ,dnn=c("Prediction","Actual"))
 confusion.pred
 
-sum(diag(confusion.pred)) / sum(confusion.pred)* 100 #you will get 40 only
+sum(diag(confusion.pred)) / sum(confusion.pred)* 100 #you will get 66.66666667
 
 
 
